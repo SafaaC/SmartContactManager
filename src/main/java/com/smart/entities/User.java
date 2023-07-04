@@ -11,16 +11,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name="USER")
 public class User {
+	
 	@jakarta.persistence.Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
+	
+	@NotBlank(message="Name cannot be blank")
 	private String name;
+	
 	@Column(unique = true)
+	@NotBlank(message="Email cannot be blank")
+	@Pattern(regexp ="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message="Invalid email id" )
 	private String email;
+	
+	@NotBlank(message = "Password Can not be Null")
+	@jakarta.validation.constraints.Size(min=8,max=12, message = "Password must contains characters between 8 and 12")
 	private String password;
 	private String role;
 	private boolean enabled;
