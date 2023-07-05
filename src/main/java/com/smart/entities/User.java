@@ -31,7 +31,6 @@ public class User {
 	private String email;
 	
 	@NotBlank(message = "Password Can not be Null")
-	@jakarta.validation.constraints.Size(min=8,max=12, message = "Password must contains characters between 8 and 12")
 	private String password;
 	private String role;
 	private boolean enabled;
