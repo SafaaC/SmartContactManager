@@ -17,7 +17,7 @@
 							th:classappend="${session.message.type}" class="alert"
 							role="alert">
 							<p th:text="${session.message.content}"></p>
-							<!-- <th:block th:text="${#sessions.removeAttribute('message')}"></th:block> -->
+							<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block> 
 
 						</div>
 						<div class="container text-center">
