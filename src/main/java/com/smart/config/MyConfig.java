@@ -46,7 +46,10 @@ public class MyConfig {
 			.requestMatchers("/admin/**").hasRole("ADMIN").
 			requestMatchers("/user/**").hasRole("USER")
 			.requestMatchers("/**").permitAll()
-			.and().formLogin();
+			.and().formLogin()
+			.loginPage("/signin")
+			.loginProcessingUrl("/dologin")
+			.defaultSuccessUrl("/user/index");
 			
 			http.authenticationProvider(authenticationProvider());
 			DefaultSecurityFilterChain chain = http.build();
