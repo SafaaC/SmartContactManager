@@ -46,6 +46,7 @@ body {
 	height: 100%;
 	position: fixed;
 	padding-top: 45px;
+	z-index: 99999999999999999999999999;
 }
 
 .sidebar a {
