@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.smart.dao.UserRepository;
+import com.smart.entities.Contact;
 import com.smart.entities.User;
 
 @Controller
@@ -27,9 +28,16 @@ public class UserController {
 	}
 	@GetMapping("/index")
 	public String Dashboard(Model model,Principal principal) {
-		
+		model.addAttribute("title", "User Dashboard");
 		return "normal/user_dashboard";
 	}
 	
-	
+	//add contact handler
+		@GetMapping("/add-contact")
+		public String opemAddContactForm(Model model) {
+			model.addAttribute("title", "Add Contact");
+			model.addAttribute("contact", new Contact());
+			return "normal/add_contact_form";
+		}
+
 }
