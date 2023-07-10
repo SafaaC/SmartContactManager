@@ -15,6 +15,8 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cId;
+	
+	@Column(unique = true)
 	private String name;
 	private String secondName;
 	private String work;
