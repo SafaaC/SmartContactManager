@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+	<section>
+	
+		<div class="mt-2 ml-2 mr-5" style="background-color: white;">
+		
+		<h1 style="text-align: center;">Your Contacts</h1>
+		
+		<div class="list-group mb-2" th:each="contact:${contacts}" >
+			<div style="display: inline-flex;" ><hr>
+			<img alt="profile-photo" src="" th:src="@{'/img/'+${contact.image}}" style="width: 50px;height:45px;border-radius: 50%">
+				<a th:href="@{'/user/contact/'+${contact.cId}}"
+					class="list-group-item-action pt-2 ml-3"
+					th:text="${contact.name}" ></a>
+					
+					
+			</div>
+		</div>
+		</div>
+		<!-- pagination -->
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li th:if="${currentPage !=0}" class="page-item"><a
+					class="page-link" href="#"
+					th:href="@{'/user/show-contacts/'+${currentPage-1}}">Previous</a></li>
+
+				<li th:each="i:${#numbers.sequence(1,totalPages)} "
+					th:classappend="${currentPage==i-1?'active':''}" class="page-item">
+					<a th:href="@{'/user/show-contacts/'+${i-1}}" class="page-link"
+					href="#"><span th:text="${i}"></span></a>
+				</li>
+
+				<li th:if="${currentPage+1 !=totalPages}" class="page-item"><a
+					class="page-link" href="#"
+					th:href="@{'/user/show-contacts/'+${currentPage+1}}">Next</a></li>
+			</ul>
+		</nav>
+	</section>
+</body>
+</html>

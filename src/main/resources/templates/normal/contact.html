@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+	<section>
+
+		<div style="width: 100%; padding-left: 10%;">
+			<div style="margin: 30px 0px;">
+			<img alt="profile-photo" src="" th:src="@{'/img/'+${contact.image}}" style="width: 200px;height:200px;border-radius: 50%">
+				<h2 th:text="${contact.name}" style="margin-left: 50px;margin-top: 10px"></h2></div>
+			<form>
+				
+				
+				<div class="form-group row">
+					<label for="secondName"class="col-sm-2 col-form-label">NickName</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext"
+							name="secondName" id="secondName"
+							th:value="${contact.secondName}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="phone" class="col-sm-2 col-form-label">Phone</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext"
+							name="phone" id="phone" th:value="${contact.phone}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="email" class="col-sm-2 col-form-label">Email</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext"
+							name="email" id="email" th:value="${contact.email}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="work" class="col-sm-2 col-form-label">Work</label>
+					<div class="col-sm-10">
+						<input type="text" readonly class="form-control-plaintext"
+							name="work" id="work" th:value="${contact.work}">
+					</div>
+				</div>
+			</form>
+			
+					
+					<div  class="description" >
+					<h5>Description</h5>
+						<th:block th:utext="${contact.description}" id="description" ></th:block></div>
+	
+				
+				<div style="margin-right: 150px;">
+					<button class="btn btn-primary btn-sm">Update</button>
+					<button class="btn btn-danger btn-sm">Delete</button>
+				</div>
+				
+			
+		</div>
+	</section>
+</body>
+</html>
