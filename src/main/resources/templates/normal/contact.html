@@ -8,7 +8,7 @@
 <body>
 	<section>
 
-		<div style="width: 100%; padding-left: 10%;">
+		<div th:if=${contact} style="width: 100%; padding-left: 10%;" >
 			<div style="margin: 30px 0px;">
 			<img alt="profile-photo" src="" th:src="@{'/img/'+${contact.image}}" style="width: 200px;height:200px;border-radius: 50%">
 				<h2 th:text="${contact.name}" style="margin-left: 50px;margin-top: 10px"></h2></div>
@@ -59,6 +59,8 @@
 				
 			
 		</div>
+		
+		<h1 th:unless="${contact}" class="alert alert-danger">You do not have the pernission to see this Contact</h1>
 	</section>
 </body>
 </html>
