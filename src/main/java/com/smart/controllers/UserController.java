@@ -143,4 +143,36 @@ public class UserController {
 		model.addAttribute("title", "View Contact");
 		return "normal/contact";
 	}
+	
+	//delete contact handler
+	@GetMapping(value = "/delete/{cId}")
+	public String delete(@PathVariable("cId") int cId,Principal principal,Model model,HttpSession session) {
+		
+		String name = principal.getName();
+		User user = userRepository.getUserByUserName(name);
+		
+		Contact contact=contactRepository.getContactById(cId);
+		if((contact==null)) {
+			session.setAttribute("message", new Message("You do not have the permission to delete such Contact ","alert-success"));
+			
+		}
+		else if(user.getId()==contact.getUser().getId()) {
+			
+			
+				//unlink contact from user
+				contact.setUser(null);
+				
+				contactRepository.delete(contact);
+			
+			
+			session.setAttribute("message", new Message("Contact Deleted Successfully ","alert-success"));
+		}
+		else {
+			session.setAttribute("message", new Message("You do not have the permission to delete such Contact ","alert-success"));
+		}
+		return "redirect:/user/show-contacts/0";
+		
+	}
+	
+	
 }
