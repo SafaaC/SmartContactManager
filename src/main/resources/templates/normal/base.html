@@ -67,6 +67,13 @@
 	<div class="content mt-5">
 		<i onclick="toggleSidebar()" class="fas fa-bars m-3"></i>
 		
+		<div th:if="${session.message}" class="container">
+					<div class="alert text-center" th:classappend="${session.message.type}" role="alert">
+					<span th:text="${session.message.content}"></span>
+					</div>
+					<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block> 
+					
+				</div>
 		<div th:replace="${content}"></div>
 	
 	</div>
@@ -85,5 +92,30 @@
     -->
     
     <script type="text/javascript" src="/js/script.js"></script>
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script >
+    function deleteContact(cId){
+    	
+    	swal({
+    		  title: "Are you sure?",
+    		  text: "Once deleted, you will not be able to recover this Contact",
+    		  icon: "warning",
+    		  buttons: true,
+    		  dangerMode: true,
+    		})
+    		.then((willDelete) => {
+    		  if (willDelete) {
+    			  //redirect
+    			  window.location="/user/delete/"+cId
+    		  
+    		  } else {
+    		    swal("Your contact is safe!");
+    		  }
+    		});
+    	
+    }
+    
+    </script>
   </body>
 </html>
