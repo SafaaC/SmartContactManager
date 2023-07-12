@@ -24,7 +24,7 @@ public class Contact {
 	private String phone;
 	private String image;
 	@Column(length = 1000)
-	private String desciption;
+	private String description;
 	
 	@ManyToOne
 	private User user;
@@ -77,11 +77,11 @@ public class Contact {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public String getDesciption() {
-		return desciption;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesciption(String desciption) {
-		this.desciption = desciption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }
