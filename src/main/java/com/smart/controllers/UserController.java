@@ -174,5 +174,14 @@ public class UserController {
 		
 	}
 	
+	// Handler to show update form
+	@PostMapping("/updateContact/{cId}")
+	public String updateForm(@PathVariable("cId") int cId,Model model) {
+		model.addAttribute("title", "Update Contact");
+		Contact contact = contactRepository.getContactById(cId);
+		model.addAttribute("contact", contact);
+		
+		return "normal/updateform";
+	}
 	
 }
