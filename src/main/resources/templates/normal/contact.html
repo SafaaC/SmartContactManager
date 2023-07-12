@@ -53,14 +53,14 @@
 	
 				
 				<div style="margin-right: 150px;">
-					<button class="btn btn-primary btn-sm">Update</button>
-					<button class="btn btn-danger btn-sm">Delete</button>
+					<a class="btn btn-primary btn-sm">Update</a>
+					<a href="#" th:onclick="|deleteContact(${contact.cId})|"  class="btn btn-danger btn-sm">Delete</a>
 				</div>
 				
 			
 		</div>
 		
-		<h1 th:unless="${contact}" class="alert alert-danger">You do not have the pernission to see this Contact</h1>
+		<h1 th:unless="${contact}" class="alert alert-danger">You do not have the permission to see this Contact</h1>
 	</section>
 </body>
 </html>
