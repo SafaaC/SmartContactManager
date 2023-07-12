@@ -47,14 +47,18 @@
 			</form>
 			
 					
-					<div  class="description" >
+					<div th:if="${contact.description}" class="description" >
 					<h5>Description</h5>
 						<th:block th:utext="${contact.description}" id="description" ></th:block></div>
 	
 				
 				<div style="margin-right: 150px;">
-					<a class="btn btn-primary btn-sm">Update</a>
+				<form th:action="@{'/user/updateContact/'+${contact.cId}}" method="post" class="mt-5">
+					<button type="submit" class="btn btn-primary btn-sm">Update</button>
 					<a href="#" th:onclick="|deleteContact(${contact.cId})|"  class="btn btn-danger btn-sm">Delete</a>
+				</form>
+					
+					
 				</div>
 				
 			
