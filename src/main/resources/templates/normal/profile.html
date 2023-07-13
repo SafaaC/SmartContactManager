@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="card">
+				<div class="card-body">
+					<div style="margin: 0 30%;width: 100%;">
+						<div style="margin: 30px 30px;">
+							<img alt="profile-photo" src=""
+								th:src="@{'/img/'+${user.imageUrl}}"
+								style="width: 200px; height: 200px; border-radius: 50%">
+
+							<h2 th:text="${user.name}"
+								style="margin-left: 50px; margin-top: 10px"></h2>
+						</div>
+						<form>
+							<input type="hidden" th:value="${user.Id}" name="Id">
+
+							<div class="form-group row">
+								<label for="email" class="col-sm-2 col-form-label">Email</label>
+								<div class="col-sm-10">
+									<input type="text" readonly class="form-control-plaintext"
+										name="email" id="email" th:value="${user.email}">
+								</div>
+							</div>
+							<!-- <div  class="form-group row">
+					<label for="password" class="col-sm-2 col-form-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" readonly class="form-control-plaintext"
+							name="password" id="password" th:value="${user.password}">
+					</div>
+				</div> -->
+							<div class="form-group row">
+								<label for="role" class="col-sm-2 col-form-label">Role</label>
+								<div class="col-sm-10">
+									<input type="text" readonly class="form-control-plaintext"
+										name="role" id="role" th:value="${user.role}">
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="enabled" class="col-sm-2 col-form-label">Account
+									Active</label>
+								<div class="col-sm-10">
+									<input type="text" readonly class="form-control-plaintext"
+										name="enabled" id="enabled" th:value="${user.enabled}">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="about" class="col-sm-2 col-form-label">About</label>
+								<div class="col-sm-10">
+									<input type="text" readonly class="form-control-plaintext"
+										name="about" id="about" th:value="${user.about}">
+								</div>
+							</div>
+						</form>
+
+
+
+						<div style="margin-right: 150px;">
+							<form th:action="@{'/user/updateProfile/'+${user.Id}}" method="post"
+								class="mt-5">
+								<button type="submit" class="btn btn-primary btn-sm">Update</button>
+								<!-- <a href="#" th:onclick="|deleteContact(${contact.cId})|"  class="btn btn-danger btn-sm">Delete</a>
+				 -->
+							</form>
+
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</section>
+</body>
+</html>
