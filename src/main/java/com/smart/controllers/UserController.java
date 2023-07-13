@@ -39,7 +39,7 @@ public class UserController {
 
 	@Autowired
 	private ContactRepository contactRepository;
-	
+
 	@ModelAttribute
 	public void addCommonData(Model model, Principal principal) {
 		String userName = principal.getName();
@@ -54,134 +54,168 @@ public class UserController {
 		return "normal/user_dashboard";
 	}
 
-	//opening add contact form handler
+	// opening add contact form handler
 	@GetMapping("/add-contact")
 	public String opemAddContactForm(Model model) {
 		model.addAttribute("title", "Add Contact");
 		model.addAttribute("contact", new Contact());
 		return "normal/add_contact_form";
 	}
-	
-	//processing add contact form
+
+	// processing add contact form
 	@PostMapping("/process-contact")
 	public String processAddContactForm(@ModelAttribute Contact contact,
-										@RequestParam("profileImage") MultipartFile file,
-										Principal principal,
-										HttpSession session) {
+			@RequestParam("profileImage") MultipartFile file, Principal principal, HttpSession session) {
 		try {
 			String name = principal.getName();
 			User user = userRepository.getUserByUserName(name);
-			
-			//processing and uploading file
-			if(file.isEmpty()) {
-				//if file is empty try our message
+
+			// processing and uploading file
+			if (file.isEmpty()) {
+				// if file is empty try our message
 				System.out.println("file is empty");
 				contact.setImage("contact.png");
-				
-			}else {
-				
-				//upload the file to folder and update the name in Contact
-				
+
+			} else {
+
+				// upload the file to folder and update the name in Contact
+
 				contact.setImage(file.getOriginalFilename());
-				
+
 				File file1 = new ClassPathResource("/static/img").getFile();
-				Path path = Paths.get(file1.getAbsolutePath()+File.separator+file.getOriginalFilename());
+				Path path = Paths.get(file1.getAbsolutePath() + File.separator + file.getOriginalFilename());
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				
-				
+
 			}
-			
-			//since it is bidirectional mapping
+
+			// since it is bidirectional mapping
 			contact.setUser(user);
 			user.getContacts().add(contact);
-			
+
 			userRepository.save(user);
-			
-			//success message
+
+			// success message
 			session.setAttribute("message", new Message("Contact Added Succesfully!!  Add More", "alert-success"));
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			//error message
+			// error message
 			session.setAttribute("message", new Message("Something went wrong !! Try Again", "alert-danger"));
-			
+
 		}
-		
+
 		return "normal/add_contact_form";
 	}
-	
-	//show contacts handler
+
+	// show contacts handler
 	@GetMapping("/show-contacts/{page}")
-	public String showcontact(@PathVariable("page") Integer page,Model model,Principal principal) {
+	public String showcontact(@PathVariable("page") Integer page, Model model, Principal principal) {
 		model.addAttribute("title", "View Contacts");
 		String userName = principal.getName();
 		User userByUserName = userRepository.getUserByUserName(userName);
 		int id = userByUserName.getId();
-		
+
 		Pageable pageable = PageRequest.of(page, 5);
-		
-		Page<Contact> contacts = contactRepository.findContactsByUser(id,pageable);
+
+		Page<Contact> contacts = contactRepository.findContactsByUser(id, pageable);
 		model.addAttribute("contacts", contacts);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", contacts.getTotalPages());
 		return "normal/show_contacts";
 	}
 
-	//show particular contact details
+	// show particular contact details
 	@GetMapping(value = "/contact/{cId}")
-	public String contact(Model model, @PathVariable("cId") int cId,Principal principal) {
-		
+	public String contact(Model model, @PathVariable("cId") int cId, Principal principal) {
+
 		String userName = principal.getName();
 		User user = userRepository.getUserByUserName(userName);
-		
+
 		Contact contact = contactRepository.getContactById(cId);
-		if(contact==null || user.getId()==contact.getUser().getId() ) {
+		if (contact == null || user.getId() == contact.getUser().getId()) {
 			model.addAttribute("contact", contact);
 		}
-		
+
 		model.addAttribute("title", "View Contact");
 		return "normal/contact";
 	}
-	
-	//delete contact handler
+
+	// delete contact handler
 	@GetMapping(value = "/delete/{cId}")
-	public String delete(@PathVariable("cId") int cId,Principal principal,Model model,HttpSession session) {
-		
+	public String delete(@PathVariable("cId") int cId, Principal principal, Model model, HttpSession session) {
+
 		String name = principal.getName();
 		User user = userRepository.getUserByUserName(name);
-		
-		Contact contact=contactRepository.getContactById(cId);
-		if((contact==null)) {
-			session.setAttribute("message", new Message("You do not have the permission to delete such Contact ","alert-success"));
-			
-		}
-		else if(user.getId()==contact.getUser().getId()) {
-			
-			
-				//unlink contact from user
-				contact.setUser(null);
-				
-				contactRepository.delete(contact);
-			
-			
-			session.setAttribute("message", new Message("Contact Deleted Successfully ","alert-success"));
-		}
-		else {
-			session.setAttribute("message", new Message("You do not have the permission to delete such Contact ","alert-success"));
+
+		Contact contact = contactRepository.getContactById(cId);
+		if ((contact == null)) {
+			session.setAttribute("message",
+					new Message("You do not have the permission to delete such Contact ", "alert-success"));
+
+		} else if (user.getId() == contact.getUser().getId()) {
+
+			// unlink contact from user
+			contact.setUser(null);
+
+			contactRepository.delete(contact);
+
+			session.setAttribute("message", new Message("Contact Deleted Successfully ", "alert-success"));
+		} else {
+			session.setAttribute("message",
+					new Message("You do not have the permission to delete such Contact ", "alert-success"));
 		}
 		return "redirect:/user/show-contacts/0";
-		
+
 	}
-	
+
 	// Handler to show update form
 	@PostMapping("/updateContact/{cId}")
-	public String updateForm(@PathVariable("cId") int cId,Model model) {
+	public String updateForm(@PathVariable("cId") int cId, Model model) {
 		model.addAttribute("title", "Update Contact");
 		Contact contact = contactRepository.getContactById(cId);
 		model.addAttribute("contact", contact);
-		
+
 		return "normal/updateform";
 	}
+
+	// update contact handler
+	@PostMapping(value = "/process-update")
+	public String upadateProcessHandler(@ModelAttribute Contact contact,
+			@RequestParam("profileImage") MultipartFile file, Model model, HttpSession session, Principal principal) {
+
+		// old contact details which is in db can be accessed using cId
+		Contact oldContact = contactRepository.getContactById(contact.getcId());
+
+		try {
+
+			if (!file.isEmpty()) {
+				// delete old photo
+				File deleteFile= new ClassPathResource("/static/img").getFile();
+				File file1= new File(deleteFile, oldContact.getImage());
+				file1.delete();
+				// upload new photo
+			
+				File saveFile = new ClassPathResource("/static/img").getFile();
+				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				
+				contact.setImage(file.getOriginalFilename());
+
+			} else {
+				contact.setImage(oldContact.getImage());
+			}
+
+			User user = userRepository.getUserByUserName(principal.getName());
+			contact.setUser(user);
+			contactRepository.save(contact);
+			session.setAttribute("message", new Message("Your Contact is Updated", "alert-success"));
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "redirect:/user/contact/"+contact.getcId();
+	}
+	
 	
 }
