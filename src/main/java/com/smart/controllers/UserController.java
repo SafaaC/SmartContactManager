@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import com.smart.entities.User;
 import com.smart.helper.Message;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
@@ -191,15 +193,15 @@ public class UserController {
 
 			if (!file.isEmpty()) {
 				// delete old photo
-				File deleteFile= new ClassPathResource("/static/img").getFile();
-				File file1= new File(deleteFile, oldContact.getImage());
+				File deleteFile = new ClassPathResource("/static/img").getFile();
+				File file1 = new File(deleteFile, oldContact.getImage());
 				file1.delete();
 				// upload new photo
-			
+
 				File saveFile = new ClassPathResource("/static/img").getFile();
 				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				
+
 				contact.setImage(file.getOriginalFilename());
 
 			} else {
@@ -214,8 +216,61 @@ public class UserController {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return "redirect:/user/contact/"+contact.getcId();
+		return "redirect:/user/contact/" + contact.getcId();
+	}
+
+	// User Profile Handler
+	@GetMapping("/profile")
+	public String openUserProfile(Model model) {
+		model.addAttribute("title", "Profile");
+		return "normal/profile";
 	}
 	
-	
+
+	// Handler to show update form
+	@PostMapping("/updateProfile/{id}")
+	public String updateProfileForm(@PathVariable("id") int id, Model model) {
+		model.addAttribute("title", "Update Profile");
+
+		return "normal/update-profile";
+	}
+
+	// update Profile handler
+	@PostMapping(value = "/profile-update")
+	public String upadateProfileProcessHandler(@Valid @ModelAttribute("user") User user, BindingResult result,
+			@RequestParam("profilePicture") MultipartFile file, Model model, HttpSession session, Principal principal) {
+
+		// old contact details which is in db can be accessed using cId
+		User oldUser = user;
+
+		try {
+
+			if (!file.isEmpty()) {
+				// delete old photo
+				File deleteFile = new ClassPathResource("/static/img").getFile();
+				File file1 = new File(deleteFile, oldUser.getImageUrl());
+				file1.delete();
+				// upload new photo
+
+				File saveFile = new ClassPathResource("/static/img").getFile();
+				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+				user.setImageUrl(file.getOriginalFilename());
+
+			} else {
+				user.setImageUrl(oldUser.getImageUrl());
+			}
+			user.setContacts(oldUser.getContacts());
+			user.setContacts(null);
+			userRepository.save(user);
+			session.setAttribute("message", new Message("Your Profile is Updated", "alert-success"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("message", new Message("Something went wrong !!" + e.getMessage(), "alert-danger"));
+
+		}
+		return "redirect:/user/profile";
+	}
 }
