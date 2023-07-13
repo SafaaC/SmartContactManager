@@ -134,7 +134,7 @@ public class UserController {
 		String userName = principal.getName();
 		User user = userRepository.getUserByUserName(userName);
 
-		Contact contact = contactRepository.getContactById(cId);
+		Contact contact = contactRepository.findBycIdAndUser(cId, user);
 		if (contact == null || user.getId() == contact.getUser().getId()) {
 			model.addAttribute("contact", contact);
 		}
@@ -150,7 +150,7 @@ public class UserController {
 		String name = principal.getName();
 		User user = userRepository.getUserByUserName(name);
 
-		Contact contact = contactRepository.getContactById(cId);
+		Contact contact = contactRepository.findBycIdAndUser(cId, user);
 		if ((contact == null)) {
 			session.setAttribute("message",
 					new Message("You do not have the permission to delete such Contact ", "alert-success"));
@@ -173,9 +173,13 @@ public class UserController {
 
 	// Handler to show update form
 	@PostMapping("/updateContact/{cId}")
-	public String updateForm(@PathVariable("cId") int cId, Model model) {
+	public String updateForm(@PathVariable("cId") int cId, Model model ,Principal principal) {
+		
+		String name = principal.getName();
+		User user = userRepository.getUserByUserName(name);
+		
 		model.addAttribute("title", "Update Contact");
-		Contact contact = contactRepository.getContactById(cId);
+		Contact contact = contactRepository.findBycIdAndUser(cId, user);
 		model.addAttribute("contact", contact);
 
 		return "normal/updateform";
@@ -185,9 +189,12 @@ public class UserController {
 	@PostMapping(value = "/process-update")
 	public String upadateProcessHandler(@ModelAttribute Contact contact,
 			@RequestParam("profileImage") MultipartFile file, Model model, HttpSession session, Principal principal) {
-
+		
+		String name = principal.getName();
+		User user = userRepository.getUserByUserName(name);
+		
 		// old contact details which is in db can be accessed using cId
-		Contact oldContact = contactRepository.getContactById(contact.getcId());
+		Contact oldContact = contactRepository.findBycIdAndUser(contact.getcId(),user);
 
 		try {
 
@@ -208,7 +215,6 @@ public class UserController {
 				contact.setImage(oldContact.getImage());
 			}
 
-			User user = userRepository.getUserByUserName(principal.getName());
 			contact.setUser(user);
 			contactRepository.save(contact);
 			session.setAttribute("message", new Message("Your Contact is Updated", "alert-success"));
