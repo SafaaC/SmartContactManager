@@ -10,7 +10,7 @@
 
 			<div class="card-body">
 				
-				<h1 class="text-center">Update Your Contact Here</h1>
+				<h3 class="text-center">Update Your Contact Here</h3>
 
 				<div class="container-fluid mt-1">
 
@@ -20,8 +20,10 @@
 
 							<form action="#" th:object="${contact}"
 								enctype="multipart/form-data" method="post"
-								th:action="@{/user/process-update}" class="mt-2">
+								th:action="@{/user/process-update}" class="mt-4">
 
+
+								<input type="hidden" th:value="${contact.cId}" name=cId>
 								<!-- first name -->
 
 								<div class="input-group">
@@ -107,7 +109,7 @@
 								<!-- Contact Image -->
 								
 								<div class="container">
-								<img alt="" th:src="@{'img/'+${contact.image}}" style="width: 50px;height: 50px;border-radius: 50%">
+								<img alt="" th:src="@{'/img/'+${contact.image}}" style="width: 50px;height: 50px;border-radius: 50%">
 								
 								</div>
 
