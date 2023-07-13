@@ -7,21 +7,39 @@
 </head>
 <body>
 	<section>
-	
-		<div class="mt-2 ml-2 mr-5" style="background-color: white;">
-		
-		<h1 style="text-align: center;padding-top: 30px">Your Contacts</h1>
-		
-		<div class="list-group mb-2" th:each="contact:${contacts}" >
-			<div style="display: inline-flex;padding-left: 5%" ><hr>
-			<img alt="profile-photo" src="" th:src="@{'/img/'+${contact.image}}" style="width: 50px;height:45px;border-radius: 50%">
-				<a th:href="@{'/user/contact/'+${contact.cId}}"
-					class="list-group-item-action pt-2 ml-3"
-					th:text="${contact.name}" ></a>
-					
-					
+
+		<div class="mt-2 ml-2 mr-5 pb-2 mb-2" style="background-color: white;">
+
+			<h1 style="text-align: center; padding-top: 30px">Your Contacts</h1>
+			<div class="container" style="padding-left: 5%">
+			
+			<div class="search-container my-3">
+			
+				<input onkeyup="search()" id="search-input" type="text" class="form-control" placeholder="Search your Contact here">
+			
+				<div class="search-result">
+				
+				<!-- result comes here-->
+				
+				</div>
 			</div>
-		</div>
+
+				<div class="list-group mb-2" th:each="contact:${contacts}">
+					<div style="display: inline-flex;">
+						<hr>
+						<img alt="profile-photo" src=""
+							th:src="@{'/img/'+${contact.image}}"
+							style="width: 50px; height: 45px; border-radius: 50%"> <a
+							th:href="@{'/user/contact/'+${contact.cId}}"
+							class="list-group-item-action pt-2 ml-3"
+							th:text="${contact.name}"></a>
+
+
+					</div>
+				</div>
+
+			</div>
+
 		</div>
 		<!-- pagination -->
 		<nav aria-label="Page navigation example">
