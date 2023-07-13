@@ -1,12 +1,26 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
 <head>
-	<meta charset="UTF-8" />
-	<title>Document</title>
+<meta charset="UTF-8" />
+<title>Document</title>
 </head>
 <body>
 	<section>
-	<h1>This is About page</h1>
+		<div class="container">
+			<div class="card">
+				<div class="card-body my-5">
+					<div class="container text-center">
+						<img alt="profile-photo" src="" th:src="@{/img/contact_logo.png}"
+							style="width: 200px; height: 200px;border-radius: 4%">
+						
+
+					</div>
+					<h3 class="text-center text-secondary mt-3"><cite  >Start Saving Your Contact On Cloud ...</cite></h3>
+					
+				</div>
+			</div>
+		</div>
 	</section>
 </body>
 </html>
