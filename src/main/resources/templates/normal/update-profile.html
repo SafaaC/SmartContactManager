@@ -20,7 +20,8 @@
 
 						</div>
 						<div class="container text-center">
-							<img style="width:100px;height:100px;border-radius: 50%" th:src="@{'/img/'+${user.imageUrl}}" />
+							<img style="width: 100px; height: 100px; border-radius: 50%"
+								th:src="@{'/img/'+${user.imageUrl}}" />
 						</div>
 
 						<h3 class="text-center">Update Here</h3>
@@ -58,8 +59,7 @@
 
 
 							<input type="hidden" readonly class="form-control-plaintext"
-								name="role" id="role" th:value="${user.role}">
-							 <input
+								name="role" id="role" th:value="${user.role}"> <input
 								type="hidden" readonly class="form-control-plaintext"
 								name="enabled" id="enabled" th:value="${user.enabled}">
 
@@ -72,10 +72,16 @@
 							<div class="custom-file mt-3">
 								<input type="file" name="profilePicture">
 							</div>
+							<div class="info mt-3">
+								<p>
+									<strong>Info!</strong> To Change Password, Please Go to settings ...
+								</p>
+							</div>
 
 							<div class="container text-center">
 								<button class="btn bg-primary text-white" type="submit">Submit</button>
 							</div>
+							
 						</form>
 					</div>
 				</div>

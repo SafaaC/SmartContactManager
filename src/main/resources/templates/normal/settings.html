@@ -14,19 +14,21 @@
 					<div class="card">
 						<div class="card-body">
 							<h3 class="mb-4">Change Password</h3>
-							<form action="">
+							<form th:action="@{/user/change-password}" method="post">
 							
 							<!-- old password -->
 							<div class="form-group">
 									
-										<input type="text" class="form-control" placeholder="Enter Old Password">
+										<input type="text" name="oldPassword" class="form-control" placeholder="Enter Old Password">
 									
 							</div>
 							
 							<!-- new password -->
 							<div class="form-group">
 									
-										<input type="text" class="form-control" placeholder="Enter New Password">
+										<input type="text" name="newPassword" class="form-control" placeholder="Enter New Password"
+										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+ 										title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters">
 									
 							</div>
 							
@@ -38,7 +40,7 @@
 							</div>
 							<div class="container mt-5 pt-2">
 							
-							<button type="button" class=" btn bg-primary text-white ">Change</button>
+							<button type="submit" class=" btn bg-primary text-white ">Change</button>
 							
 							</div>
 							</form>
