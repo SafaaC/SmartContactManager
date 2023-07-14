@@ -10,7 +10,7 @@
 		<div class="container">
 			<div class="card">
 				<div class="card-body">
-					<div style="margin: 0 30%;width: 100%;">
+					<div style="margin: 0 30%; width: 100%;">
 						<div style="margin: 30px 30px;">
 							<img alt="profile-photo" src=""
 								th:src="@{'/img/'+${user.imageUrl}}"
@@ -64,8 +64,8 @@
 
 
 						<div style="margin-right: 150px;">
-							<form th:action="@{'/user/updateProfile/'+${user.Id}}" method="post"
-								class="mt-5">
+							<form th:action="@{'/user/updateProfile/'+${user.Id}}"
+								method="post" class="mt-5">
 								<button type="submit" class="btn btn-primary btn-sm">Update</button>
 								<!-- <a href="#" th:onclick="|deleteContact(${contact.cId})|"  class="btn btn-danger btn-sm">Delete</a>
 				 -->
@@ -80,6 +80,15 @@
 			</div>
 
 		</div>
+		<script>
+		$(document).ready(()=>{
+			
+			$(".item").removeClass("active");
+			$("#profile").addClass("active");
+			
+		});
+		</script>
+
 
 	</section>
 </body>

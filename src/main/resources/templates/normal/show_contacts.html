@@ -59,6 +59,15 @@
 					th:href="@{'/user/show-contacts/'+${currentPage+1}}">Next</a></li>
 			</ul>
 		</nav>
+		
+		<script>
+		$(document).ready(()=>{
+			
+			$(".item").removeClass("active");
+			$("#show-contacts").addClass("active");
+			
+		});
+		</script>
 	</section>
 </body>
 </html>

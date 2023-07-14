@@ -76,7 +76,16 @@
 				</div>
 			</div>
 		</div>
-
+		
+		<script>
+		$(document).ready(()=>{
+			
+			$(".item").removeClass("active");
+			$("#show-contacts").addClass("active");
+			
+		});
+		</script>
+		
 		<h1 th:unless="${contact}" class="alert alert-danger">You do not
 			have the permission to see this Contact</h1>
 	</section>
