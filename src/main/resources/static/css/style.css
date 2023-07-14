@@ -119,3 +119,37 @@ body {
 	background-color:  #009688 !important;
 	color: white !important;
 }
+
+.info {
+  background-color: #e7f3fe;
+  border-left: 6px solid #2196F3;
+}
+
+/* about page style */
+.feature-list {
+  margin-top: 40px;
+}
+
+.feature-list li {
+  margin-bottom: 15px;
+}
+
+.feature-list li:before {
+  content: "✓ ";
+  color: #66bb6a;
+  margin-right: 10px;
+}
+
+.contact-info {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.contact-info a {
+  color: #333;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
