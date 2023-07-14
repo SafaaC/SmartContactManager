@@ -279,4 +279,11 @@ public class UserController {
 		}
 		return "redirect:/user/profile";
 	}
+	
+	//open settings handler
+	@GetMapping("/settings")
+	public String openSettings(Model model) {
+		model.addAttribute("title", "Settings");
+		return "normal/settings";
+	}
 }
