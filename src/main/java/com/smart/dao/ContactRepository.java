@@ -19,7 +19,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer>{
 	//fing contact by user
 	@Query("from Contact c where c.user.id=:userId")
 	public Page<Contact> findContactsByUser(@Param ("userId") int userId,Pageable pageable);
-	//pageable contains current page-page and no of records per page-6
+	//pageable contains current page-page and no of records 
 	
 	
 	public Contact findBycIdAndUser(int cId,User user);

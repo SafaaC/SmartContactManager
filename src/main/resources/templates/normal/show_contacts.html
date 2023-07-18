@@ -48,18 +48,17 @@
 					class="page-link" href="#"
 					th:href="@{'/user/show-contacts/'+${currentPage-1}}">Previous</a></li>
 
-				<li th:each="i:${#numbers.sequence(1,totalPages)} "
+				<li th:each="i:${#numbers.sequence(1,totalPages,1)} "
 					th:classappend="${currentPage==i-1?'active':''}" class="page-item">
 					<a th:href="@{'/user/show-contacts/'+${i-1}}" class="page-link"
 					href="#"><span th:text="${i}"></span></a>
 				</li>
 
-				<li th:if="${currentPage+1 !=totalPages}" class="page-item"><a
+				<li th:if="${currentPage+1 !=totalPages and totalPages!=0}" class="page-item"><a
 					class="page-link" href="#"
 					th:href="@{'/user/show-contacts/'+${currentPage+1}}">Next</a></li>
 			</ul>
 		</nav>
-		
 		<script>
 		$(document).ready(()=>{
 			
