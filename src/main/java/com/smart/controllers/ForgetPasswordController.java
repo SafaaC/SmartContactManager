@@ -28,9 +28,9 @@ public class ForgetPasswordController {
 	public String sendOTP(Model model,@RequestParam("email") String email,HttpSession session) {
 		model.addAttribute("title", "Email Verification");
 		
-		//generate OTP of 4 digit
+		//generate OTP 
 		
-		int otp = random.nextInt(9999);
+		int otp = random.nextInt(999999);
 		System.out.println(otp);
 		
 		//send otp to email
