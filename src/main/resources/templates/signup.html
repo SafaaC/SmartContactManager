@@ -32,7 +32,7 @@
 							<div class="form-group">
 								<label for="userName">Your Name</label> <input type="text"
 									class="form-control" id="userName" placeholder="Enter name"
-									name="name" th:value="${user.name}"
+									name="name" th:value="${user.name}" autocomplete="off"
 									th:classappend="${#fields.hasErrors('name')?'is-invalid':' '}"
 									required>
 								<div th:each="e : ${#fields.errors('name')}"
@@ -42,7 +42,7 @@
 							<div class="form-group">
 								<label for="userEmail">Email address</label> <input type="email"
 									class="form-control" id="email" placeholder="Enter email"
-									name="email" th:value="${user.email}" required
+									name="email" th:value="${user.email}" required autocomplete="off"
 									th:classappend="${#fields.hasErrors('email')?'is-invalid':' '}">
 
 								<div th:each="e : ${#fields.errors('email')}"
@@ -53,7 +53,7 @@
 							<div class="form-group">
 								<label for="UserPassword">Password</label> <input
 									type="password" class="form-control" id="UserPassword"
-									placeholder="Password" name="password" required
+									placeholder="Password" name="password" required autocomplete="off"
 									th:classappend="${#fields.hasErrors('password')?'is-invalid':' '}">
 
 								<div th:each="e : ${#fields.errors('password')}"
