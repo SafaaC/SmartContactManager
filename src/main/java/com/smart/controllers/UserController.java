@@ -296,7 +296,7 @@ public class UserController {
 	//handler for changing password
 	@PostMapping("/change-password")
 	public String changepassword(@RequestParam("oldPassword") String oldPassword,
-								@RequestParam("newPassword") String newPassword,
+								@RequestParam("newPassword") String newPassword,@RequestParam("confirmPassword") String confirmPassword,
 								Principal principal,HttpSession session){
 		
 		String name = principal.getName();
@@ -304,11 +304,15 @@ public class UserController {
 		
 		if(this.bCryptPasswordEncoder.matches(oldPassword, currentUser.getPassword())) {
 			//Change password
+			if(newPassword.equals(confirmPassword)) {
+				currentUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
+				this.userRepository.save(currentUser);
+				session.setAttribute("message", new Message("Your Password is Updated", "alert-success"));
+			}else {
+				session.setAttribute("message", new Message("Password confirmation failed .Please confirm new Password properly", "alert-danger"));
+				return "redirect:/user/settings";
+			}
 			
-			currentUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
-			this.userRepository.save(currentUser);
-			session.setAttribute("message", new Message("Your Password is Updated", "alert-success"));
-
 		}else {
 			//error message
 			session.setAttribute("message", new Message("Old Password is Incorrect Please write correct password", "alert-danger"));

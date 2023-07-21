@@ -83,12 +83,21 @@ public class ForgetPasswordController {
 	}
 
 	@PostMapping("/change-password")
-	public String changePassword(@RequestParam("newPassword") String newPassword, HttpSession session) {
+	public String changePassword(@RequestParam("newPassword") String newPassword,@RequestParam("confirmPassword") String confirmPassword, HttpSession session) {
 		String email = (String) session.getAttribute("email");
 		User user = userRepository.getUserByUserName(email);
-		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
-		this.userRepository.save(user);
-		session.setAttribute("message", "Your Password is Updated");
-		return "redirect:/signin";
+		System.out.println(user.getPassword());
+		if(newPassword.equals(confirmPassword)) {
+			user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+			System.out.println("new" +user.getPassword());
+			this.userRepository.save(user);
+			session.setAttribute("message", "Your Password is Updated");
+			return "redirect:/signin";
+		}
+		else {
+			session.setAttribute("message", "Please confirm your Password Correctly !!");
+			return "password_change_form";
+		}
+
 	}
 }
