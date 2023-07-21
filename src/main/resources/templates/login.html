@@ -24,6 +24,7 @@
 								</div>
 								<div th:if="${session.message}" class="alert alert-success">
 								You have changed the password successfully
+								<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block> 
 								</div>
 								
 								<div class="form-group">
